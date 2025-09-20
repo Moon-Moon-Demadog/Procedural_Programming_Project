@@ -1,2 +1,3 @@
-// Part on of Procedural Programming Project: Rock , Paper, Scissors Game
-// This program will allow the user to play Rock, Paper, Scissors against the computer.
+// Part two of Procedural Programming Project: Gradebook
+// Part one is under Gradebook
+// This program will read a file containing student names and their grades
