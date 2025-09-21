@@ -9,17 +9,15 @@ using namespace std;
 
 // function prototypes
 void readDataFromFile(const string& filename, int& studentCount);
-
-
+string studentNames[MAX_STUDENTS][MAX_GRADES];
+float studentAverages[MAX_STUDENTS] = {0};
+const int MAX_STUDENTS = 50;
+const int MAX_GRADES = 5;
 
 int main()
 {
-	// arrays to hold student data
-	const int MAX_STUDENTS = 50;
-	const int MAX_GRADES = 5;
-	string studentNames[MAX_STUDENTS][MAX_GRADES];
-	float studentAverages[MAX_STUDENTS];
-	char studentLetterGrades[MAX_STUDENTS];
+	// arrays to hold student data;
+	char studentLetterGrades[MAX_STUDENTS] = { 0 };
 	int studentCount = 0;
 	string filename = "StudentGrades.txt";
 
@@ -31,7 +29,7 @@ void readDataFromFile(const string& filename, int& studentCount)
 	ifstream inputFile(filename);
 	if (!inputFile)
 	{
-		cerr << "Error opening file: " << filename << endl;
+		cout << "Error opening file: " << filename << endl;
 		return;
 	}
 	string name;
@@ -54,4 +52,30 @@ void readDataFromFile(const string& filename, int& studentCount)
 		studentCount++;
 	}
 	inputFile.close();
+}
+
+// function to calculate average grades
+static void calculateAverages(int studentCount, float studentAverages[])
+{
+	for (int i = 0; i < studentCount; ++i)
+	{
+		float sum = 0;
+		int gradeCount = 0;
+		for (int j = 1; j <= MAX_GRADES; ++j)
+		{
+			if (!studentNames[i][j].empty())
+			{
+				sum += stof(studentNames[i][j]);
+				gradeCount++;
+			}
+		}
+		if (gradeCount > 0)
+		{
+			studentAverages[i] = sum / gradeCount;
+		}
+		else
+		{
+			studentAverages[i] = 0;
+		}
+	}
 }
