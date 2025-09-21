@@ -9,37 +9,49 @@ using namespace std;
 
 // function prototypes
 void readDataFromFile(const string& filename, int& studentCount);
-static void displayStudentInfo(int studentCount);
 
 
-int main() {
+
+int main()
+{
 	// arrays to hold student data
 	const int MAX_STUDENTS = 50;
 	const int MAX_GRADES = 5;
 	string studentNames[MAX_STUDENTS][MAX_GRADES];
 	float studentAverages[MAX_STUDENTS];
 	char studentLetterGrades[MAX_STUDENTS];
-
 	int studentCount = 0;
-	string filename = "grades.txt"; // Input file name
-	// Read data from file
-	readDataFromFile(filename, studentCount);
+	string filename = "StudentGrades.txt";
 
 }
 
-// Function to read data from file and populate arrays
-void readDataFromFile(const string& a, int& studentCount)
+// function to read data from file and get student count
+void readDataFromFile(const string& filename, int& studentCount)
 {
-}
-
-// function to calculate average using grades array
-void calculateAverage(int grades[], int gradeCount, float& average) {
-	int sum = 0;
-	for (int i = 0; i < gradeCount; i++) {
-		sum += grades[i];
+	ifstream inputFile(filename);
+	if (!inputFile)
+	{
+		cerr << "Error opening file: " << filename << endl;
+		return;
 	}
-	average = static_cast<float>(sum) / gradeCount;
+	string name;
+	float grade;
+	while (inputFile >> name)
+	{
+		for (int i = 0; i < 5; ++i)
+		{
+			if (inputFile >> grade)
+			{
+				// Store the name and grades in the arrays
+				studentNames[studentCount][0] = name;
+				studentNames[studentCount][i + 1] = to_string(grade);
+			}
+			else
+			{
+				break; // No more grades for this student
+			}
+		}
+		studentCount++;
+	}
+	inputFile.close();
 }
-
-
-// function to display student information
